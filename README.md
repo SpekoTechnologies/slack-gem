@@ -1,8 +1,6 @@
 # Speko::Slack
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/speko/slack`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to the Speko::Slack gem. Get ready to seamlessly integrate Slack notifications into your application! This gem utilizes the slack-ruby-client gem's library... but provides an easier approach.
 
 ## Installation
 
@@ -16,13 +14,31 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install speko-slack
-
 ## Usage
 
-TODO: Write usage instructions here
+Make sure you have the following ENV variables set:
+
+* `SLACK_API_TOKEN`
+* `SLACK_CHANNEL` - will be the default, but can be overridden per `post` call. 
+
+Below is the `post` method. **Note**: `message` and `code` are required. Pass in `nil` for channel name if you don't plan on verriding the default value.
+
+```ruby
+def post(message, code, channel = nil, *args)
+   ...
+end
+```
+
+#### Example:
+
+`SlackClient.post('A small message here.', :alert_type, nil, deployment_id: deplyoment.id, user: deployment.user.name, ...)`
+
+#### Alert Types
+
+* info
+* warning
+* success
+* fatal
 
 ## Development
 
