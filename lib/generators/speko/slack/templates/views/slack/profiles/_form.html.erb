@@ -1,0 +1,41 @@
+<%= render 'layouts/messages', object: f.object %>
+<div class="form-group">
+  <%= f.label :name, class: 'col-sm-3 control-label' %>
+  <div class='col-sm-6'>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+</div>
+
+<div class='form-group'>
+  <%= f.label :description, 'Description', class: 'col-sm-3 control-label' %>
+  <div class="col-sm-6">
+    <%= f.text_area :description, placeholder: 'Describe what this profile is for. (Optional)', class: 'form-control' %>
+  </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :api_key, "API Key", class: 'col-sm-3 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_area :encrypted_api_key, value: @slack_profile.decrypt_api_key, placeholder: 'encrypted API key', class: 'form-control' %>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :channels, "Channels", class: 'col-sm-3 control-label' %>
+    <div class="col-sm-6">
+      <%= f.collection_select(:channel_list, Speko::Slack::Profile.channel_counts, :name, :name, {}, { multiple: true, class: "taggable select2 form-control col-sm-6" } ) %>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :profiles, "Profiles", class: 'col-sm-3 control-label' %>
+    <div class="col-sm-6">
+      <%= f.collection_select(:profile_ids, Profile.all, :id, :name, {}, { multiple: true, class: "taggable select2 form-control col-sm-6" } ) %>
+    </div>
+</div>
+
+<div class="form-group">
+  <div class='col-sm-6'>
+    <%= f.submit 'Save Profile', class: 'btn btn-primary btn-lg', id: 'profile_submit' %>
+  </div>
+</div>

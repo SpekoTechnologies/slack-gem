@@ -1,0 +1,43 @@
+<% title("Slack Profile for " +  @slack_profile.name)%>
+<h1>Slack Profile for <%= @slack_profile.name %></h1>
+
+<div class="container-fluid">
+  <div class='row'>
+    <div class="col-md-8">
+      <div class='row'>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Description </h3>
+          </div>
+          <div class="panel-body">
+            <%= @slack_profile.description %>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">API Key (encrypted) </h3>
+          </div>
+          <div class="panel-body">
+            <%= @slack_profile.decrypt_api_key %>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <%= link_to 'Edit', edit_slack_profile_path(@slack_profile), class: "btn btn-danger" %>
+        <%= link_to 'Delete', slack_profile_path(@slack_profile), method: :delete, class: "btn btn-danger" %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Deployment Events</h3>
+        </div>
+        <div class="panel-body event-panel">
+          <%= @slack_profile.channel_list.each{|channel| p channel} %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

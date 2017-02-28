@@ -13,13 +13,29 @@ module Speko
         # TODO
       end
 
-      # Post a message to Slack.
-      # Returns a boolean value
-      def post(message, code, channel = nil, *args)
+      # Iterate through each slack channel send it off
+      def post(message, code, slack_profiles = nil, *args)
         items = generate_args(args)
 
-        client.chat_postMessage(
-          channel: "#" + determine_channel(channel),
+        slack_profiles ||= [{channels: [Speko::Slack.enabled_configs[:slack][:slack_channel]], api_key: Speko::Slack.enabled_configs[:slack][:slack_api_token]}]
+
+        slack_profiles.each do|profile|
+          profile[:channels].each do|channel|
+            send(profile[:api_key], channel, message, items, code)
+          end
+        end
+      rescue
+        Rails.logger.debug "Fatal: Could not post to any Slack channel."
+        false
+      end
+
+      private
+
+      # Post a message to Slack.
+      # Returns a boolean value
+      def send(api_key, channel, message, items, code)
+        client(api_key).chat_postMessage(
+          channel: "#" + channel,
           as_user: true,
           attachments: [
             {
@@ -33,15 +49,13 @@ module Speko
           ]
         )
       rescue
-        Rails.logger.debug "Could not post to Slack."
+        Rails.logger.debug "Could not post to Slack Channel: #{channel}"
         false
       end
 
-      private
-
       # Return a global Slack::Web::Client object
-      def client
-        @client ||= ::Slack::Web::Client.new
+      def client(token)
+        ::Slack::Web::Client.new(token: token || Speko::Slack.enabled_configs[:slack][:slack_api_token])
       end
     end
   end

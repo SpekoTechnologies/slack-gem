@@ -1,0 +1,5 @@
+<% title("Slack Profile for #{@slack_profile.name}")%>
+<h1>Edit Slack Profile for <%= @slack_profile.name %></h1>
+<%= form_for @slack_profile, :url => { :controller => :profiles, :action => :update }, html: { class: 'form-horizontal profile' } do |f| %>
+  <%= render 'form', f: f %>
+<% end %>

@@ -17,6 +17,10 @@ module Speko
       # Returns the Hash values for configurations settings
       attr_reader :config
 
+      def table_name_prefix
+        'slack_'
+      end
+
       # Returns boolean value - determined if config is set or not
       def configured?
          !!config

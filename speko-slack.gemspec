@@ -31,9 +31,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # A Ruby and command-line client for the Slack Web and Real Time Messaging APIs
-  spec.add_dependency "slack-ruby-client"
-
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+
+  spec.add_dependency "slack-ruby-client"
+  spec.add_dependency 'acts-as-taggable-on', '~> 4.0'
 end
