@@ -44,7 +44,7 @@ module Speko
               color: Speko::Slack.enabled_configs[:codes][code],
               fields: generate_message(items.merge(level: key_to_string(code).downcase)),
               footer: items[:user] || 'unknown user?',
-              ts: DateTime.now
+              ts: DateTime.now.to_i
             }
           ]
         )
