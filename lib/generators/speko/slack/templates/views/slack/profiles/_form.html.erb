@@ -28,13 +28,6 @@
 </div>
 
 <div class="form-group">
-    <%= f.label :profiles, "Profiles", class: 'col-sm-3 control-label' %>
-    <div class="col-sm-6">
-      <%= f.collection_select(:profile_ids, Profile.all, :id, :name, {}, { multiple: true, class: "taggable select2 form-control col-sm-6" } ) %>
-    </div>
-</div>
-
-<div class="form-group">
   <div class='col-sm-6'>
     <%= f.submit 'Save Profile', class: 'btn btn-primary btn-lg', id: 'profile_submit' %>
   </div>

@@ -15,13 +15,13 @@ module Speko
 
       # Iterate through each slack channel send it off
       def post(message, code, slack_profiles = nil, *args)
-        items = generate_args(args)
+        args.flatten!
 
         slack_profiles ||= [{channels: [Speko::Slack.enabled_configs[:slack][:slack_channel]], api_key: Speko::Slack.enabled_configs[:slack][:slack_api_token]}]
 
         slack_profiles.each do|profile|
           profile[:channels].each do|channel|
-            send(profile[:api_key], channel, message, items, code)
+            send(profile[:api_key], channel, message, args, code)
           end
         end
       rescue
@@ -41,9 +41,11 @@ module Speko
             {
               fallback: "#{message}\n\n",
               pretext: "#{message}\n\n",
+              title: items.select{|i| i[:title]}.try(:first)[:title],
+              title_link: items.select{|i| i[:title_link]}.try(:first)[:title_link],
               color: Speko::Slack.enabled_configs[:codes][code],
-              fields: generate_message(items.merge(level: key_to_string(code).downcase)),
-              footer: items[:user] || 'unknown user?',
+              fields: generate_message(items),
+              footer: items.select{|i| i[:user]}.try(:first)[:user] || 'unknown user?',
               ts: DateTime.now.to_i
             }
           ]
