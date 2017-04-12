@@ -24,7 +24,7 @@ Make sure you have the following ENV variables set:
 Below is the `post` method. **Note**: `message` and `code` are required. Pass in `nil` for channel name if you don't plan on verriding the default value.
 
 ```ruby
-def post(message, code, channel = nil, *args)
+def post(message, code, slack_profiles = nil, *args)
    ...
 end
 ```
