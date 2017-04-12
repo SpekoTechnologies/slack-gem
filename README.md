@@ -31,7 +31,20 @@ end
 
 #### Example:
 
-`SlackClient.post('A small message here.', :alert_type, nil, deployment_id: deplyoment.id, user: deployment.user.name, ...)`
+```
+message = [
+        {title: "Your Title"},
+        {title_link: "SOME_URL"},
+        {SOME_KEY_1: "SOME_VALUE_1", short: true},
+        {SOME_KEY_2: "SOME_VALUE_2", short: true},
+        {SOME_KEY_3: "SOME_VALUE_3", short: false},
+        {SOME_KEY_4: "SOME_VALUE_4", short: false},
+        {SOME_KEY_4: "SOME_VALUE_5", short: true},
+        {user: USER_NAME}
+      ]
+      
+SlackClient.post('SOME_MESSAGE', :alert_type, { channels:[ARR_OF_CHANNELS], api_key: SLACK_API_KEY }, message)
+```
 
 #### Alert Types
 
